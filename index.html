@@ -5,214 +5,168 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>rbxscan – Template Exporter</title>
 
-<!-- Fonts -->
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- Tailwind (from first file) -->
-<script src="https://cdn.tailwindcss.com"></script>
 
 <!-- Particles -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
 
 <style>
-/* ===== RESET ===== */
+/* ================= RESET & BASE ================= */
 *{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,-apple-system;overflow-x:hidden;background:#0a0a0f;color:#fff}
 
-/* ===== BASE ===== */
-body{
-    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont;
-    background:#000;
-    color:#fff;
-    overflow-x:hidden;
-}
-
-/* ===== PARTICLES LAYER (FILE 2) ===== */
-#particles-js{
-    position:fixed;
-    inset:0;
-    z-index:0;
-    background:#000;
-}
-
-/* ===== PREMIUM BACKGROUND (FILE 1) ===== */
+/* ================= BACKGROUNDS ================= */
+#particles-js{position:fixed;inset:0;z-index:0}
 .animated-bg{
-    position:fixed;
-    inset:0;
-    z-index:1;
-    background:radial-gradient(circle at 50% 50%,#120a2a 0%,#000 70%);
+    position:fixed;inset:0;z-index:1;
+    background:
+      radial-gradient(circle at 20% 20%,rgba(124,58,237,.35),transparent 50%),
+      radial-gradient(circle at 80% 80%,rgba(217,70,239,.25),transparent 55%),
+      radial-gradient(circle at 50% 50%,#120a2a,#0a0a0f 70%);
 }
 
-/* ===== CONTENT ===== */
-#root{
-    position:relative;
-    z-index:2;
-    min-height:100vh;
-}
+/* ================= LAYOUT ================= */
+#root{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:4rem 2rem}
 
-/* ===== GLASS ===== */
+/* ================= HERO + TITLE ================= */
+.hero{text-align:center;max-width:900px;margin-bottom:3rem}
+.hero h1{
+    font-size:4.5rem;font-weight:900;
+    background:linear-gradient(135deg,#fff,#d8b4fe,#f0abfc);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{font-size:1.3rem;color:#c7b8ff;margin-top:1rem;line-height:1.6}
+
+/* ================= GLASS CARD ================= */
 .glass-card{
+    width:100%;max-width:720px;
     background:rgba(255,255,255,.06);
-    backdrop-filter:blur(18px) saturate(160%);
-    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(24px) saturate(180%);
+    border:1px solid rgba(139,92,246,.25);
     border-radius:28px;
-    transition:.4s;
+    padding:2.5rem;
+    box-shadow:0 0 40px rgba(139,92,246,.15);
+    transition:.4s ease;
+    margin-bottom:2.5rem;
 }
 .glass-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 25px 80px rgba(255,255,255,.08);
-    border-color:rgba(255,255,255,.25);
+    border-color:rgba(217,70,239,.6);
+    box-shadow:0 0 60px rgba(217,70,239,.35);
+    transform:translateY(-8px);
 }
 
-/* ===== BUTTON ===== */
+/* ================= INSTRUCTIONS ================= */
+.instruction-step{
+    margin-bottom:1.4rem;
+    font-size:1.15rem;
+    color:#e0d7ff;
+    line-height:1.7;
+}
+.instruction-step strong{color:#fff}
+
+/* ================= BUTTON ================= */
 .compile-btn{
-    background:linear-gradient(135deg,#fff,#d0d0d0);
-    color:#000;
-    font-weight:800;
-    font-size:1.2rem;
-    padding:1.4rem 2.6rem;
-    border-radius:22px;
-    cursor:grab;
-    text-align:center;
     display:block;
-    box-shadow:0 20px 60px rgba(255,255,255,.25);
-    transition:.3s;
+    text-align:center;
+    width:100%;
+    padding:1.5rem;
+    font-size:1.3rem;
+    font-weight:900;
+    border-radius:22px;
+    background:linear-gradient(135deg,#7c3aed,#a855f7,#d946ef);
+    color:#000;
+    box-shadow:0 0 30px rgba(139,92,246,.7);
+    cursor:grab;
+    text-decoration:none;
+    margin-top:1.5rem;
+    transition:.3s ease;
 }
 .compile-btn:hover{
     transform:translateY(-4px);
+    box-shadow:0 0 50px rgba(217,70,239,.9);
 }
 
-/* ===== TOAST ===== */
-.toast{
-    position:fixed;
-    top:20px;
-    right:-400px;
-    background:#fff;
-    color:#000;
-    padding:1rem 1.4rem;
-    border-radius:16px;
-    font-weight:700;
-    box-shadow:0 20px 60px rgba(0,0,0,.4);
-    transition:right .4s cubic-bezier(.68,-0.55,.26,1.55);
-    z-index:9999;
-}
-.toast.show{right:20px}
+/* ================= FOOTER ================= */
+footer{text-align:center;color:#9b8cff;font-size:.85rem;padding:2rem 0;margin-top:auto}
 </style>
 </head>
-
 <body>
 
-<!-- FILE 2 BACKGROUND -->
+<!-- BACKGROUND -->
 <div id="particles-js"></div>
-
-<!-- FILE 1 BACKGROUND -->
 <div class="animated-bg"></div>
 
-<!-- CONTENT -->
-<div id="root" class="min-h-screen px-8 md:px-20 py-16">
+<div id="root">
 
-<header class="flex items-center gap-4 mb-20">
-    <span class="text-4xl font-black">rbxscan</span>
-</header>
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Template Exporter</h1>
+        <p>Drag the bookmark below to your bar and use it on your ROBLOX avatar page to export all templates as JSON.</p>
+    </div>
 
-<section class="max-w-6xl mx-auto text-center mb-20">
-    <p class="text-gray-400 text-xl mb-4">
-        Compile your avatar templates with ease using a bookmark-based system
-    </p>
-    <h1 class="text-6xl md:text-8xl font-black bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-        Template Exporter
-    </h1>
-</section>
+    <!-- MAIN CARD -->
+    <div class="glass-card">
 
-<section class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="instruction-step">
+            <strong>1.</strong> Click and hold the button below, then drag it into your browser's bookmarks bar.
+        </div>
 
-    <!-- LEFT (FILE 2 CONTENT) -->
-    <div class="glass-card p-10 flex flex-col">
-        <h2 class="text-3xl font-extrabold mb-6">How It Works</h2>
-        <p class="text-gray-300 text-lg leading-relaxed mb-10">
-            Drag the button below to your bookmark bar.
-            Open your ROBLOX avatar page and click it to instantly copy
-            all avatar templates as JSON to your clipboard.
-        </p>
+        <div class="instruction-step">
+            <strong>2.</strong> Open your ROBLOX avatar page in a new tab.
+        </div>
 
-        <a id="compileBtn" class="compile-btn mt-auto" draggable="true">
+        <div class="instruction-step">
+            <strong>3.</strong> While on the ROBLOX page, click the bookmark to export your templates.
+        </div>
+
+        <a id="compileBtn" class="compile-btn" draggable="true">
             Compile Item
         </a>
     </div>
 
-    <!-- RIGHT (FILE 2 VIDEO) -->
-    <div class="glass-card p-6">
-        <div class="aspect-video rounded-2xl overflow-hidden bg-black">
-            <video controls class="w-full h-full object-cover">
-                <source src="tutorial.mp4" type="video/mp4">
-            </video>
-        </div>
-    </div>
-
-</section>
-
-<section class="max-w-6xl mx-auto mt-20">
-    <div class="glass-card p-14 text-center text-2xl text-gray-300 font-semibold">
-        Copy your avatar templates in seconds with our innovative bookmark-based system.
-    </div>
-</section>
-
-<footer class="text-center text-gray-500 text-sm mt-24">
-    © 2025 rbxscan. All rights reserved.
-</footer>
+    <!-- FOOTER -->
+    <footer>© 2025 rbxscan. All Rights Reserved.</footer>
 
 </div>
 
-<div id="toast" class="toast">Bookmarklet ready – drag to bookmarks bar</div>
-
 <script>
-/* ===== PARTICLES (FILE 2) ===== */
+/* Particles */
 particlesJS('particles-js',{
-particles:{
-number:{value:50,density:{enable:true,value_area:1200}},
-color:{value:['#fff','#aaa']},
-opacity:{value:.25,random:true},
-size:{value:4,random:true},
-line_linked:{enable:true,distance:180,color:'#fff',opacity:.15},
-move:{enable:true,speed:1.2}
-},
-interactivity:{
-events:{onhover:{enable:true,mode:'grab'}},
-modes:{grab:{distance:160,line_linked:{opacity:.4}}}
-},
-retina_detect:true
+    particles:{number:{value:50,density:{enable:true,value_area:1200}},
+    color:{value:['#c084fc','#a855f7','#7c3aed']},
+    opacity:{value:.3,random:true},size:{value:4,random:true},
+    line_linked:{enable:true,distance:180,color:'#a855f7',opacity:.2},
+    move:{enable:true,speed:1.1}},
+    interactivity:{events:{onhover:{enable:true,mode:'grab'}},modes:{grab:{distance:160,line_linked:{opacity:.4}}}},
+    retina_detect:true
 });
 
-/* ===== BOOKMARKLET ===== */
-const bookmarklet=`javascript:(function(){
-let t=[];
-document.querySelectorAll('[data-template-id]').forEach(e=>{
-t.push({
-id:e.dataset.templateId,
-name:e.querySelector('.template-name')?.textContent||'Unknown',
-image:e.querySelector('img')?.src||''
-});
-});
-const j=JSON.stringify(t,null,2);
-navigator.clipboard.writeText(j)
-.then(()=>alert('✅ '+t.length+' templates copied!'))
-.catch(()=>prompt('Copy JSON:',j));
+/* Bookmarklet Logic */
+const bookmarklet = `javascript:(function(){
+    let data=[];
+    document.querySelectorAll('[data-template-id]').forEach(el=>{
+        data.push({
+            id:el.dataset.templateId,
+            name:el.querySelector('.template-name')?.textContent||'Unknown',
+            img:el.querySelector('img')?.src||''
+        });
+    });
+    const json=JSON.stringify(data,null,2);
+    navigator.clipboard.writeText(json)
+      .then(()=>alert('✅ '+data.length+' templates copied!'))
+      .catch(()=>prompt('Copy this JSON:',json));
 })();`;
 
-const btn=document.getElementById('compileBtn');
-const toast=document.getElementById('toast');
-
-btn.href=bookmarklet;
-btn.addEventListener('dragstart',e=>{
-e.dataTransfer.setData('text/uri-list',bookmarklet);
-});
-
-btn.onclick=async e=>{
-e.preventDefault();
-await navigator.clipboard.writeText(bookmarklet);
-toast.classList.add('show');
-setTimeout(()=>toast.classList.remove('show'),3500);
+const btn = document.getElementById('compileBtn');
+btn.href = bookmarklet;
+btn.addEventListener('dragstart', e=> e.dataTransfer.setData('text/uri-list', bookmarklet));
+btn.onclick = async e=> {
+    e.preventDefault();
+    await navigator.clipboard.writeText(bookmarklet);
+    alert('Bookmarklet copied! Drag it to your bookmarks bar.');
 };
 </script>
 
